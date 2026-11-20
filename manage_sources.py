@@ -130,7 +130,8 @@ def import_flow(first_run=False):
     hint = ics_import.file_hint(path)
     existing_id, meta = sources.find_by_file(hint)
     if existing_id:
-        if input("这份 ICS 已经导入过（%s），重新导入会覆盖该来源的数据，继续吗？(y/n)："
+        if input("这份 ICS 已经导入过（%s）。重新导入会重新解析 ICS，覆盖该来源里你改过的"
+                 "课表、简称和颜色，继续吗？(y/n)："
                  % meta.get("label", existing_id)).strip().lower() != "y":
             print("已取消")
             return False
