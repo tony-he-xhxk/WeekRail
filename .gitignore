@@ -1,0 +1,21 @@
+# ---- 个人数据与生成物（不进入仓库）----
+data/
+课表ics/
+outputs/
+
+# ---- Python ----
+__pycache__/
+*.pyc
+
+# ---- 备份 ----
+*.bak
+*.bak[0-9]*
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# ---- 内部文档（不发布）----
+PLAN.md
