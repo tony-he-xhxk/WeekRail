@@ -107,6 +107,7 @@ ICS 里的时间通过根目录 **`period_times.json`** 换算成节次。默认
 
 - Python 是 **32 位**（PySide6 只提供 64 位 Windows 轮子 `win_amd64`）；
 - Python 版本过旧：PySide6 6.9 / 6.10 要求 **≥3.9**，6.11+ 要求 **≥3.10**；
+- **Python 3.14**：PySide6 6.9 / 6.10 声明 `Requires-Python <3.14`，需要 **6.11+**（本项目会自动选最新，目前镜像上是 6.12.x）；镜像节点没同步到 6.11/6.12 时也会显示 `none`；
 - 镜像同步异常。
 
 排查与处理：
@@ -123,7 +124,18 @@ py -0p
 py -3.10 -m pip install -r requirements.txt
 ```
 
-如果镜像缺包，可换官方源：`py -3.10 -m pip install -r requirements.txt -i https://pypi.org/simple`。
+镜像缓存/节点未更新时，先加 `--no-cache-dir` 重试，再换官方源：
+
+```powershell
+py -3.14 -m pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+py -3.14 -m pip install -r requirements.txt -i https://pypi.org/simple
+```
+
+验证镜像是否能给 Python 3.14 找到 PySide6（应下载 6.11.x / 6.12.x）：
+
+```powershell
+py -3.14 -m pip download --no-deps --only-binary=:all: --python-version 3.14 PySide6 -d "$env:TEMP\pyside-test"
+```
 
 ## 数据与隐私
 
