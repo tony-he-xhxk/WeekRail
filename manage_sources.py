@@ -18,9 +18,24 @@ def _ics_files():
 def _ask_file():
     files = _ics_files()
     if not files:
-        print("[ERR] 课表ics/ 里没有 .ics 文件，请先把 ICS 放进去。")
+        folder = ics_import.ICS_DIR
+        created = False
+        if not folder.exists():
+            try:
+                folder.mkdir(parents=True, exist_ok=True)
+                created = True
+            except OSError as exc:
+                print("[ERR] 无法创建 ICS 文件夹：%s" % exc)
+                print("      请手动创建这个文件夹后重试：")
+                print("        %s" % folder)
+                return None
+        print("[ERR] 没有找到任何 .ics 文件。")
+        print("      %s：" % ("已自动创建文件夹，请把 ICS 文件放进去" if created
+                              else "请把 ICS 文件放到这个文件夹"))
+        print("        %s" % folder)
+        print("      放好后重新进入 [8] → i。")
         return None
-    print("-- 课表ics/ 里的文件 --")
+    print("-- ICS 文件目录：%s --" % ics_import.ICS_DIR)
     for i, path in enumerate(files, 1):
         print("  [%d] %s" % (i, path.name))
     raw = input("选择文件编号（回车取消，也可直接输入 .ics 路径）：").strip()
