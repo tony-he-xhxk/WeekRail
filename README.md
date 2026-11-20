@@ -16,24 +16,22 @@ Windows 桌面课表横条：置顶显示当天课程，按大学周次排课，
 
 ## 快速开始
 
-1. 安装 **64 位 Python 3.10+**（安装时勾选 *Add Python to PATH*）。确认位数：
-
-   ```powershell
-   python -c "import platform,sys;print(sys.version);print(platform.architecture()[0])"
-   ```
-
-   最后一行应为 `64bit`。
-2. 在本目录打开终端，安装依赖：
+1. 安装 **64 位 Python 3.10+**（勾选 *Add Python to PATH*）。
+2. 安装依赖：
 
    ```powershell
    pip install -r requirements.txt
    ```
 
+   报 `from versions: none` 或下载很慢时，换阿里云源：
+
+   ```powershell
+   pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+   ```
+
 3. 双击 **`launcher.bat`**。
-4. 首次使用会先选课表来源：
-   - `i` 从 ICS 导入：把 `.ics` 放进 **`课表ics/`**，按提示选择文件；
-   - `m` 手动创建：先设置开学日期与总周数，再录入科目和课表。
-5. 选 `[3] 启动课表显示`，横条会出现在屏幕顶部；平时可通过托盘图标控制。
+4. 首次启动选 `i`（从 `课表ics/` 导入 ICS）或 `m`（手动创建）。
+5. 选 `[3] 显示横条`，之后用托盘图标控制。
 
 ## 菜单一览
 
@@ -84,8 +82,8 @@ ICS 里的时间通过根目录 **`period_times.json`** 换算成节次。默认
 
 ## 依赖
 
-- **Python 3.10+**（其余全部使用 Python 标准库）
-- 第三方包（见 `requirements.txt`）：
+- **Python 3.10+（64 位）**，其余使用标准库。
+- `requirements.txt`：
 
   ```text
   PySide6>=6.5,<7
@@ -95,47 +93,11 @@ ICS 里的时间通过根目录 **`period_times.json`** 换算成节次。默认
 
 | 包 | 用途 | 安装后占用 |
 |----|------|-----------|
-| **PySide6**（含 shiboken6） | 课表横条界面 | **≈ 635 MB** |
+| **PySide6**（含 shiboken6） | 横条界面 | **≈ 635 MB** |
 | **Pillow** | 托盘图标 / 图片处理 | **≈ 15 MB** |
 | **pystray** | 系统托盘图标 | **< 1 MB** |
 
-> **体积提示**：PySide6 占绝大部分，`pip install -r requirements.txt` 首次需要下载数百 MB，请预留约 **700 MB** 磁盘空间。测试版本：PySide6 6.11.2、pystray 0.19.5、Pillow 12.2.0。
-
-### 安装报 `from versions: none`
-
-这表示 pip 在当前 Python 上找不到可用的 PySide6 轮子，常见原因：
-
-- Python 是 **32 位**（PySide6 只提供 64 位 Windows 轮子 `win_amd64`）；
-- Python 版本过旧：PySide6 6.9 / 6.10 要求 **≥3.9**，6.11+ 要求 **≥3.10**；
-- **Python 3.14**：PySide6 6.9 / 6.10 声明 `Requires-Python <3.14`，需要 **6.11+**（本项目会自动选最新，目前镜像上是 6.12.x）；镜像节点没同步到 6.11/6.12 时也会显示 `none`；
-- 镜像同步异常。
-
-排查与处理：
-
-```powershell
-python --version
-python -c "import sys,platform;print(sys.executable);print(platform.architecture()[0])"
-py -0p
-```
-
-装好 64 位 Python 3.10+ 后，用明确指定的解释器安装（避免 PATH 指到旧版本）：
-
-```powershell
-py -3.10 -m pip install -r requirements.txt
-```
-
-镜像缓存/节点未更新时，先加 `--no-cache-dir` 重试，再换官方源：
-
-```powershell
-py -3.14 -m pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-py -3.14 -m pip install -r requirements.txt -i https://pypi.org/simple
-```
-
-验证镜像是否能给 Python 3.14 找到 PySide6（应下载 6.11.x / 6.12.x）：
-
-```powershell
-py -3.14 -m pip download --no-deps --only-binary=:all: --python-version 3.14 PySide6 -d "$env:TEMP\pyside-test"
-```
+安装后合计约 **650 MB**，首次安装请预留约 **700 MB**。Python 3.14 会自动使用 PySide6 6.11+。
 
 ## 数据与隐私
 
