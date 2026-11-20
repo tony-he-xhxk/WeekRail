@@ -1,5 +1,5 @@
 @echo off
-rem UniSchedule one-click start (also fine as a Windows Startup shortcut).
+rem WeekRail one-click start (also fine as a Windows Startup shortcut).
 rem  Same as launcher.bat --auto: opens the schedule bar for TODAY,
 rem  so no "3" + Enter + Enter typing is needed.
 rem  Single-window conhost design and the tray icon are unchanged.

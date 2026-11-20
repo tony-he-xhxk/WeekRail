@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""UniSchedule 统一托盘（唯一系统托盘图标，管理终端 + 课表横条）。
+"""WeekRail 统一托盘（唯一系统托盘图标，管理终端 + 课表横条）。
 
 线程模型（关键设计，勿破坏）：
 - pystray 菜单点击回调运行在它自己的消息循环线程里，
@@ -16,7 +16,7 @@
    - 隐藏到托盘：手动隐藏终端
    - 启动/关闭课表横条：文字由 state_getter 实时求值；
      点击后只发事件给主线程处理（可能需要终端输入模拟日期）
-   - 退出 UniSchedule：发退出事件，launcher 统一善后
+   - 退出 WeekRail：发退出事件，launcher 统一善后
 3. 动态菜单文案用「可调用标签」（每次弹出菜单实时计算），
    不依赖 update_menu 刷新（Win32 后端对已建项的文字赋值不生效）。
 
@@ -214,9 +214,9 @@ def start(on_quit_request=None, state_getter=None, can_auto_start=None):
             Menu.SEPARATOR,
             MenuItem(_bar_label, _cb_toggle_display),
             Menu.SEPARATOR,
-            MenuItem("退出 UniSchedule", _cb_quit),
+            MenuItem("退出 WeekRail", _cb_quit),
         )
-        _icon = Icon("UniSchedule", _load_image(), "UniSchedule", menu)
+        _icon = Icon("WeekRail", _load_image(), "WeekRail · 周轨", menu)
         _icon.run_detached()
     except Exception:
         _icon = None

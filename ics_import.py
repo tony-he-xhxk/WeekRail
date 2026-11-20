@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""把 .ics 课表（BitUp 导出格式）转换成 UniSchedule 的科目 / 课表条目。
+"""把 .ics 课表（BitUp 导出格式）转换成 WeekRail 的科目 / 课表条目。
 
 流程：
 1. 展开 ICS 折行，解析 VEVENT（SUMMARY / DTSTART / DTEND / DESCRIPTION）；

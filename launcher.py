@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""UniSchedule 统一启动器：终端菜单循环，执行完一项回到菜单，不退出。
+"""WeekRail 统一启动器：终端菜单循环，执行完一项回到菜单，不退出。
 
 窗口行为：
 - 启动时创建统一托盘图标（唯一系统托盘入口，复用 icon.ico）。
@@ -120,7 +120,7 @@ def _start_display(sim=None, ask=True):
     # display 用"父进程 PID + 等待句柄"判断 launcher 是否还活着。
     # 旧写法用 DuplicateHandle 传继承句柄，但 Python 的 subprocess 默认 close_fds=True，
     # 子进程拿不到那个句柄，看门狗其实一直没生效。
-    env_display = dict(os.environ, UNISCHEDULE_PARENT_PID=str(os.getpid()))
+    env_display = dict(os.environ, WEEKRAIL_PARENT_PID=str(os.getpid()))
     with _proc_lock:
         _display_proc = subprocess.Popen(args, env=env_display)
     tray_win.refresh_menu()  # 重建原生菜单，托盘文案立即反映"关闭课表横条"
@@ -247,7 +247,7 @@ def main(argv=None):
         return 0
     auto = any(a in ("--auto", "-a", "--auto-display") for a in argv)
     no_minimize = "--no-minimize" in argv
-    print("== UniSchedule 大学生课表工具 ==")
+    print("== WeekRail（周轨）大学生课表工具 ==")
     ok = tray_win.start(on_quit_request=_request_quit,
                         state_getter=_display_alive,
                         can_auto_start=_can_auto_start)
@@ -363,7 +363,7 @@ def _drain_events():
 
 
 def _request_quit():
-    """托盘「退出 UniSchedule」回调。"""
+    """托盘「退出 WeekRail」回调。"""
     _quit_requested.set()
 
 

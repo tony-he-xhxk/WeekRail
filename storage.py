@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""UniSchedule 公共数据层：JSON 读写、范围解析、周次计算。"""
+"""WeekRail 公共数据层：JSON 读写、范围解析、周次计算。"""
 import json
 from datetime import date
 from pathlib import Path

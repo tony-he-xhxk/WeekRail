@@ -79,7 +79,7 @@ class _RECT(ctypes.Structure):
 # 每 STATE_CHECK_TICKS 拍比一次（4 个 stat ≈ 30 微秒）。
 STATE_CHECK_TICKS = 15
 DATA_FILES = ("config.json", "subjects.json", "lessons.json", "prefs.json", "holidays.json")
-_DEBUG = os.environ.get("UNISCHEDULE_DEBUG") == "1"
+_DEBUG = os.environ.get("WEEKRAIL_DEBUG") == "1"
 
 try:
     _user32 = ctypes.windll.user32
@@ -122,7 +122,7 @@ def _open_parent_watch():
     global _parent_handle
     if _kernel32 is None:
         return False
-    raw = os.environ.get("UNISCHEDULE_PARENT_PID")
+    raw = os.environ.get("WEEKRAIL_PARENT_PID")
     if not raw:
         return False
     try:
@@ -145,7 +145,7 @@ def _pct(prefs, key, default):
 
 
 def _log(message):
-    """调试输出：设环境变量 UNISCHEDULE_DEBUG=1 时打印到 stdout。"""
+    """调试输出：设环境变量 WEEKRAIL_DEBUG=1 时打印到 stdout。"""
     if _DEBUG:
         print(message, flush=True)
 
@@ -226,7 +226,7 @@ class Bar(QWidget):
         self._date_ord = today.toordinal()
         self._data_stamp = _data_stamp()
         self._tick_count = 0
-        self.setWindowTitle("UniSchedule")
+        self.setWindowTitle("WeekRail")
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self._apply_opacity()
@@ -537,7 +537,7 @@ def _load_preview_font():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="UniSchedule 课表横条")
+    parser = argparse.ArgumentParser(description="WeekRail（周轨）课表横条")
     parser.add_argument("--date", help="模拟日期 YYYY-MM-DD（调试用）")
     parser.add_argument("--render", help="渲染成 PNG 后退出（预览/调试用）")
     parser.add_argument("--render-width", type=int, default=1880, help="--render 时的横条宽度")
