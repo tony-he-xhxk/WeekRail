@@ -19,3 +19,7 @@ desktop.ini
 
 # ---- 内部文档（不发布）----
 PLAN.md
+
+# ---- 开发辅助 / 生成物（不进入仓库）----
+make_icon.py
+icon_preview.png
