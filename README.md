@@ -16,7 +16,13 @@ Windows 桌面课表横条：置顶显示当天课程，按大学周次排课，
 
 ## 快速开始
 
-1. 安装 **Python 3.10+**（安装时勾选 *Add Python to PATH*）。
+1. 安装 **64 位 Python 3.10+**（安装时勾选 *Add Python to PATH*）。确认位数：
+
+   ```powershell
+   python -c "import platform,sys;print(sys.version);print(platform.architecture()[0])"
+   ```
+
+   最后一行应为 `64bit`。
 2. 在本目录打开终端，安装依赖：
 
    ```powershell
@@ -94,6 +100,30 @@ ICS 里的时间通过根目录 **`period_times.json`** 换算成节次。默认
 | **pystray** | 系统托盘图标 | **< 1 MB** |
 
 > **体积提示**：PySide6 占绝大部分，`pip install -r requirements.txt` 首次需要下载数百 MB，请预留约 **700 MB** 磁盘空间。测试版本：PySide6 6.11.2、pystray 0.19.5、Pillow 12.2.0。
+
+### 安装报 `from versions: none`
+
+这表示 pip 在当前 Python 上找不到可用的 PySide6 轮子，常见原因：
+
+- Python 是 **32 位**（PySide6 只提供 64 位 Windows 轮子 `win_amd64`）；
+- Python 版本过旧：PySide6 6.9 / 6.10 要求 **≥3.9**，6.11+ 要求 **≥3.10**；
+- 镜像同步异常。
+
+排查与处理：
+
+```powershell
+python --version
+python -c "import sys,platform;print(sys.executable);print(platform.architecture()[0])"
+py -0p
+```
+
+装好 64 位 Python 3.10+ 后，用明确指定的解释器安装（避免 PATH 指到旧版本）：
+
+```powershell
+py -3.10 -m pip install -r requirements.txt
+```
+
+如果镜像缺包，可换官方源：`py -3.10 -m pip install -r requirements.txt -i https://pypi.org/simple`。
 
 ## 数据与隐私
 
